@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>CE9F9B98-E76A-4197-A7AD-EFEC8F589BF7</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PinchNavExample</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>DA008F1F-2B56-48C7-8C2D-D1C4C42DB624</key>
+		<string>https://github.com/Jpoliachik/PinchNav.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PinchNavExample/PinchNavExample.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>DA008F1F-2B56-48C7-8C2D-D1C4C42DB624</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Jpoliachik/PinchNav.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>DA008F1F-2B56-48C7-8C2D-D1C4C42DB624</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DA008F1F-2B56-48C7-8C2D-D1C4C42DB624</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PinchNav</string>
+		</dict>
+	</array>
+</dict>
+</plist>

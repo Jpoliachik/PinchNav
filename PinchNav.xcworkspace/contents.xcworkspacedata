@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "container:"
+      name = "PinchNav">
+      <FileRef
+         location = "group:PinchNav/PInchNavViewController.h">
+      </FileRef>
+      <FileRef
+         location = "group:PinchNav/PInchNavViewController.m">
+      </FileRef>
+      <FileRef
+         location = "group:PinchNav/PinchNavIrisView.h">
+      </FileRef>
+      <FileRef
+         location = "group:PinchNav/PinchNavIrisView.m">
+      </FileRef>
+      <FileRef
+         location = "group:PinchNav/PinchNavButtonView.h">
+      </FileRef>
+      <FileRef
+         location = "group:PinchNav/PinchNavButtonView.m">
+      </FileRef>
+   </Group>
+   <FileRef
+      location = "group:LOBMenuViewController.h">
+   </FileRef>
+   <FileRef
+      location = "group:LOBMenuViewController.m">
+   </FileRef>
+   <FileRef
+      location = "group:LOBCircleView.h">
+   </FileRef>
+   <FileRef
+      location = "group:LOBCircleView.m">
+   </FileRef>
+   <FileRef
+      location = "group:LOBMenuButtonView.h">
+   </FileRef>
+   <FileRef
+      location = "group:LOBMenuButtonView.m">
+   </FileRef>
+   <FileRef
+      location = "group:Example/PinchNavExample.xcodeproj">
+   </FileRef>
+</Workspace>
