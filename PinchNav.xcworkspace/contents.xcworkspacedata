@@ -18,24 +18,6 @@
       </FileRef>
    </Group>
    <FileRef
-      location = "group:LOBMenuViewController.h">
-   </FileRef>
-   <FileRef
-      location = "group:LOBMenuViewController.m">
-   </FileRef>
-   <FileRef
-      location = "group:LOBCircleView.h">
-   </FileRef>
-   <FileRef
-      location = "group:LOBCircleView.m">
-   </FileRef>
-   <FileRef
-      location = "group:LOBMenuButtonView.h">
-   </FileRef>
-   <FileRef
-      location = "group:LOBMenuButtonView.m">
-   </FileRef>
-   <FileRef
       location = "group:Example/PinchNavExample.xcodeproj">
    </FileRef>
 </Workspace>
