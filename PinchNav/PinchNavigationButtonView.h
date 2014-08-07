@@ -10,4 +10,9 @@
 
 @interface PinchNavigationButtonView : UIView
 
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic) BOOL shouldAnimateOnPress;
+
+- (instancetype)initWithTitle:(NSString *)title color:(UIColor *)color diameter:(CGFloat)diameter;
+
 @end

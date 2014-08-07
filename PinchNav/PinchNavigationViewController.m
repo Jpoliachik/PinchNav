@@ -8,17 +8,27 @@
 
 #import "PinchNavigationViewController.h"
 
+static const CGFloat kMinIrisScale = 0.01f;
+
 @interface PinchNavigationViewController ()
 @property (nonatomic, strong) UIView *irisView;
 @property (nonatomic, strong) UIView *superViewReference;
+@property (nonatomic, readwrite) PNavState state;
+@property (nonatomic, strong) NSArray *buttonArray;
 @end
 
 @implementation PinchNavigationViewController
 
-- (instancetype)initWithSuperview:(UIView *)superView
+- (instancetype)initWithSuperview:(UIView *)superView withButtonArray:(NSArray *)buttonArray
 {
     self = [super init];
     if (self) {
+        
+        self.buttonArray = buttonArray;
+        
+        self.state = PNavStateClosed;
+        
+        [self setDefaultProperties];
         
         // assign the pinch gesture to the superview
         if(superView) {
@@ -33,10 +43,28 @@
     return self;
 }
 
+- (void)setDefaultProperties
+{
+    self.durationAnimatingIrisIn = 0.5;
+    self.durationAnimatingIrisOut = 0.2;
+    self.durationAnimatingButtonsOutFromCenter = 0.3;
+    self.durationAnimatingButtonsOutAndClose = 0.2;
+    self.durationAnimatingSelectedButtonIn = 0.4;
+    self.durationAnimatingSelectedIrisOut = 0.3;
+    self.durationTransitionPeriod = 0.5;
+    self.durationAnimatingFadeOutAndClose = 0.2;
+    
+    self.pinchInCutoffPoint = 0.2;
+    self.pinchEndedCutoffPoint = 0.5;
+    
+    self.buttonDistanceFromCenter = 100;
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     
 }
 
@@ -46,9 +74,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setPinchInCutoffPoint:(CGFloat)pinchInCutoffPoint
+{
+    // value needs to be between 1.0 and 0.01
+    _pinchInCutoffPoint = MIN(1.0f, MAX(kMinIrisScale, pinchInCutoffPoint));
+}
+
 - (void)onPinch:(UIPinchGestureRecognizer *)gesture
 {
-    if(gesture.scale < 1.0f){
+    if(gesture.scale < 1.0f && (self.state == PNavStateClosed || self.state == PNavStatePinching)){
+        
+        self.state = PNavStatePinching;
         
         if(!self.view.superview){
             self.view.frame = self.superViewReference.frame;
@@ -56,6 +92,7 @@
         }
         
         if(!self.irisView){
+            
             //Create a huge UIView to use for the initial animation.
             self.irisView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100000, 100000)];
             //Set the center at the screen's center, so we have plenty of room for scale animating.
@@ -74,16 +111,116 @@
 
         }else{
             [self.irisView setTransform:CGAffineTransformMakeScale(gesture.scale, gesture.scale)];
+            
+            if(gesture.scale <= self.pinchInCutoffPoint){
+                // animate iris all the way in
+                
+                self.state = PNavStateAnimatingIrisIn;
+                
+                [self animateIrisAtScale:gesture.scale withVelocity:gesture.velocity toCenterWithCompletion:^{
+                    
+                    [self animateButtonsOutFromCenterWithCompletion:^{
+                        
+                    }];
+                    
+                }];
+            }
         }
     }
     
     if(gesture.state == UIGestureRecognizerStateEnded && self.irisView){
-        [self.irisView removeFromSuperview];
-        self.irisView = nil;
+        
+        if(gesture.scale < self.pinchEndedCutoffPoint){
+            [self animateIrisAtScale:gesture.scale withVelocity:gesture.velocity toCenterWithCompletion:^{
+                
+                [self animateButtonsOutFromCenterWithCompletion:^{
+                    
+                }];
+                
+            }];
+        }else{
+            self.state = PNavStateAnimatingIrisOut;
+            
+            [self animateIrisOutWithCompletion:^{
+                [self setMenuClosed];
+            }];
+        }
+        
     }
 
     NSLog(@"Pinch: %f", gesture.scale);
+    NSLog(@"Velocity: %f", gesture.velocity);
     
+}
+
+- (void)setMenuClosed
+{
+    [self.irisView removeFromSuperview];
+    self.irisView = nil;
+    self.state = PNavStateClosed;
+}
+
+- (void)animateIrisAtScale:(CGFloat)currentScale withVelocity:(CGFloat)currentVelocity toCenterWithCompletion:(void (^)())completion
+{
+    CGFloat calculatedDuration = self.durationAnimatingIrisIn * currentScale;
+    
+    [UIView animateWithDuration:calculatedDuration
+						  delay:0
+						options:(UIViewAnimationOptionCurveEaseOut)
+					 animations:^{
+						 self.irisView.transform = CGAffineTransformScale(CGAffineTransformIdentity, kMinIrisScale, kMinIrisScale);
+					 }
+					 completion:^(BOOL finishedFirst){
+                         completion();
+                     }];
+
+}
+
+- (void)animateIrisOutWithCompletion:(void (^)())completion
+{
+    
+    [UIView animateWithDuration:self.durationAnimatingIrisOut
+                          delay:0
+                        options:(UIViewAnimationOptionCurveEaseInOut)
+                     animations:^{
+                         
+                         self.irisView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.0, 1.0);
+                         self.irisView.alpha = 0;
+                         
+                     }completion:^(BOOL finishedSecond){
+                         completion();
+                     }];
+}
+
+- (void)animateButtonsOutFromCenterWithCompletion:(void (^)())completion
+{
+    self.state = PNavStateAnimatingButtonsOutFromCenter;
+    
+    //Get rid of animation view, and switch to using self as the background.
+    self.irisView.layer.mask = nil;
+    [self.irisView setFrame:self.view.frame];
+    
+    [self initButtons];
+    
+    //Show icon circles and expand them out from the center.
+    //Prepare the buttons to be animated in.
+    for(PinchNavigationButtonView *item in self.buttonArray)
+    {
+        [self prepareButtonForStartAnimation:item];
+    }
+    
+    //Animate each button outwards.
+    //This is done with a CAKeyframeAnimation subclass,
+    //So we don't need to perform this within the animation block.
+    for(int i = 0; i < self.buttonArray.count; i++)
+    {
+        PinchNavigationButtonView *button = [self.buttonArray objectAtIndex:i];
+        [self animateButtonOutwards:button forIndex:i withDistance:160];
+        
+    }
+    
+    //slide in the top/bottom views
+//    [self showTopBottomViewsAnimated:YES];
 }
 
 //This method will add a circular mask at the center of the view.
@@ -106,15 +243,64 @@
     view.layer.mask = maskLayer;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (CGPoint)calculateCoordinatesFromPoint:(CGPoint)point forAngle:(CGFloat)angle withDistance:(CGFloat)distance
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+	//Given a starting point, angle, and distance, calculate the new coordinates.
+	CGFloat x = point.x + (cos(angle * M_PI / 180) * distance);
+	CGFloat y = point.y + (sin(angle * M_PI / 180) * distance);
+	return CGPointMake(x, y);
 }
-*/
+
+- (void)prepareButtonForStartAnimation:(UIView *)button
+{
+	button.alpha = 0.0;
+	button.hidden = NO;
+	button.center = self.view.center;
+}
+
+- (void)animateButtonOutwards:(UIView *)button forIndex:(NSUInteger)index withDistance:(CGFloat)distance
+{
+	//Because the math assumes an angle of 0 is on the x axis, we want to rotate calculations 90 degrees
+	//So an angle of 0 degrees becomes staight up.
+	int angleShift = -90;
+	
+	//Angle of separation between buttons.
+	CGFloat angleVariance = 360.0 / self.buttonArray.count;
+	
+	//Get the new coordinates based on distance/angle
+	CGPoint newCenter = [self calculateCoordinatesFromPoint:button.center forAngle:(angleVariance * index) + angleShift withDistance:self.buttonDistanceFromCenter];
+	
+    [UIView animateWithDuration:self.durationAnimatingButtonsOutFromCenter delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        button.center = newCenter;
+        button.alpha = 1.0f;
+    }completion:^(BOOL finished){
+        
+    }];
+}
+
+- (void)initButtons
+{
+	//Create the buttonContainer
+	//It will be a square equal to the width of the screen.
+//	CGFloat width = [[UIScreen mainScreen] bounds].size.width;
+//	self.buttonContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, width)];
+//	self.buttonContainer.center = self.view.center;
+//	[self.view addSubview:self.buttonContainer];
+	//Add constraints to have it centered always.
+    //	[self.buttonContainer makeConstraints:^(MASConstraintMaker *make){
+    //		make.center.equalTo(self.view);
+    //		make.height.equalTo(@(width));
+    //		make.width.equalTo(@(width));
+    //	}];
+	
+    
+	//Add the button
+	for(UIView *buttonView in self.buttonArray)
+	{
+		[self.view addSubview:buttonView];
+	}
+    
+}
+
 
 @end

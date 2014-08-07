@@ -20,7 +20,13 @@
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     // for app-wide PinchNav menu access, init it here
-    self.pinchNav = [[PinchNavigationViewController alloc] initWithSuperview:self.window];
+    PinchNavigationButtonView *button1 = [[PinchNavigationButtonView alloc] initWithTitle:@"Item1" color:[UIColor greenColor] diameter:50];
+    PinchNavigationButtonView *button2 = [[PinchNavigationButtonView alloc] initWithTitle:@"Item2" color:[UIColor greenColor] diameter:50];
+    PinchNavigationButtonView *button3 = [[PinchNavigationButtonView alloc] initWithTitle:@"Item3" color:[UIColor greenColor] diameter:50];
+    PinchNavigationButtonView *button4 = [[PinchNavigationButtonView alloc] initWithTitle:@"Item4" color:[UIColor greenColor] diameter:50];
+    PinchNavigationButtonView *button5 = [[PinchNavigationButtonView alloc] initWithTitle:@"Item5" color:[UIColor greenColor] diameter:50];
+    NSArray *buttonArray = @[button1, button2, button3, button4, button5];
+    self.pinchNav = [[PinchNavigationViewController alloc] initWithSuperview:self.window withButtonArray:buttonArray];
     
     // init the sample view controller
     PinchNavExampleViewController *vc = [[PinchNavExampleViewController alloc] init];
