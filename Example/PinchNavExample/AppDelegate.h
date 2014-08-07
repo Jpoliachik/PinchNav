@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PinchNavigationViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, strong) PinchNavigationViewController *pinchNav;
 
 @end

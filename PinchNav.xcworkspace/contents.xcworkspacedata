@@ -16,6 +16,18 @@
       <FileRef
          location = "group:PinchNav/PinchNavButtonView.m">
       </FileRef>
+      <FileRef
+         location = "group:PinchNav/PinchNavigationButtonView.h">
+      </FileRef>
+      <FileRef
+         location = "group:PinchNav/PinchNavigationButtonView.m">
+      </FileRef>
+      <FileRef
+         location = "group:PinchNav/PinchNavigationViewController.h">
+      </FileRef>
+      <FileRef
+         location = "group:PinchNav/PinchNavigationViewController.m">
+      </FileRef>
    </Group>
    <FileRef
       location = "group:Example/PinchNavExample.xcodeproj">

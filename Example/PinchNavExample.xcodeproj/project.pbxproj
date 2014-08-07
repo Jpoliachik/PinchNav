@@ -13,16 +13,16 @@
 		A3DB184F197424D500430EBE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3DB184D197424D500430EBE /* InfoPlist.strings */; };
 		A3DB1851197424D500430EBE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A3DB1850197424D500430EBE /* main.m */; };
 		A3DB1855197424D500430EBE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A3DB1854197424D500430EBE /* AppDelegate.m */; };
-		A3DB1858197424D500430EBE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3DB1856197424D500430EBE /* Main.storyboard */; };
-		A3DB185B197424D500430EBE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3DB185A197424D500430EBE /* ViewController.m */; };
 		A3DB185D197424D500430EBE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3DB185C197424D500430EBE /* Images.xcassets */; };
 		A3DB1864197424D500430EBE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3DB1863197424D500430EBE /* XCTest.framework */; };
 		A3DB1865197424D500430EBE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3DB1844197424D500430EBE /* Foundation.framework */; };
 		A3DB1866197424D500430EBE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3DB1848197424D500430EBE /* UIKit.framework */; };
 		A3DB186E197424D500430EBE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3DB186C197424D500430EBE /* InfoPlist.strings */; };
 		A3DB1870197424D500430EBE /* PinchNavExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A3DB186F197424D500430EBE /* PinchNavExampleTests.m */; };
-		A3DB18821974251000430EBE /* PinchNavButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = A3DB187F1974251000430EBE /* PinchNavButtonView.m */; };
-		A3DB1885197426B500430EBE /* PinchNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3DB1884197426B500430EBE /* PinchNavViewController.m */; };
+		D043473A19893D8000FF85BD /* PinchNavigationButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = D043473719893D8000FF85BD /* PinchNavigationButtonView.m */; };
+		D043473B19893D8000FF85BD /* PinchNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D043473919893D8000FF85BD /* PinchNavigationViewController.m */; };
+		D043473F19893E4B00FF85BD /* PinchNavExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D043473D19893E4B00FF85BD /* PinchNavExampleViewController.m */; };
+		D043474019893E4B00FF85BD /* PinchNavExampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D043473E19893E4B00FF85BD /* PinchNavExampleViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,19 +46,19 @@
 		A3DB1852197424D500430EBE /* PinchNavExample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PinchNavExample-Prefix.pch"; sourceTree = "<group>"; };
 		A3DB1853197424D500430EBE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A3DB1854197424D500430EBE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		A3DB1857197424D500430EBE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		A3DB1859197424D500430EBE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		A3DB185A197424D500430EBE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		A3DB185C197424D500430EBE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A3DB1862197424D500430EBE /* PinchNavExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PinchNavExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3DB1863197424D500430EBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		A3DB186B197424D500430EBE /* PinchNavExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PinchNavExampleTests-Info.plist"; sourceTree = "<group>"; };
 		A3DB186D197424D500430EBE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A3DB186F197424D500430EBE /* PinchNavExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PinchNavExampleTests.m; sourceTree = "<group>"; };
-		A3DB187E1974251000430EBE /* PinchNavButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinchNavButtonView.h; path = ../PinchNav/PinchNavButtonView.h; sourceTree = "<group>"; };
-		A3DB187F1974251000430EBE /* PinchNavButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PinchNavButtonView.m; path = ../PinchNav/PinchNavButtonView.m; sourceTree = "<group>"; };
-		A3DB1883197426B500430EBE /* PinchNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinchNavViewController.h; path = ../PinchNavViewController.h; sourceTree = "<group>"; };
-		A3DB1884197426B500430EBE /* PinchNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PinchNavViewController.m; path = ../PinchNavViewController.m; sourceTree = "<group>"; };
+		D043473619893D8000FF85BD /* PinchNavigationButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinchNavigationButtonView.h; path = ../PinchNav/PinchNavigationButtonView.h; sourceTree = "<group>"; };
+		D043473719893D8000FF85BD /* PinchNavigationButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PinchNavigationButtonView.m; path = ../PinchNav/PinchNavigationButtonView.m; sourceTree = "<group>"; };
+		D043473819893D8000FF85BD /* PinchNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinchNavigationViewController.h; path = ../PinchNav/PinchNavigationViewController.h; sourceTree = "<group>"; };
+		D043473919893D8000FF85BD /* PinchNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PinchNavigationViewController.m; path = ../PinchNav/PinchNavigationViewController.m; sourceTree = "<group>"; };
+		D043473C19893E4B00FF85BD /* PinchNavExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinchNavExampleViewController.h; sourceTree = "<group>"; };
+		D043473D19893E4B00FF85BD /* PinchNavExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinchNavExampleViewController.m; sourceTree = "<group>"; };
+		D043473E19893E4B00FF85BD /* PinchNavExampleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinchNavExampleViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,9 +121,9 @@
 			children = (
 				A3DB1853197424D500430EBE /* AppDelegate.h */,
 				A3DB1854197424D500430EBE /* AppDelegate.m */,
-				A3DB1856197424D500430EBE /* Main.storyboard */,
-				A3DB1859197424D500430EBE /* ViewController.h */,
-				A3DB185A197424D500430EBE /* ViewController.m */,
+				D043473C19893E4B00FF85BD /* PinchNavExampleViewController.h */,
+				D043473D19893E4B00FF85BD /* PinchNavExampleViewController.m */,
+				D043473E19893E4B00FF85BD /* PinchNavExampleViewController.xib */,
 				A3DB185C197424D500430EBE /* Images.xcassets */,
 				A3DB184B197424D500430EBE /* Supporting Files */,
 			);
@@ -162,10 +162,10 @@
 		A3DB18791974250100430EBE /* PinchNav */ = {
 			isa = PBXGroup;
 			children = (
-				A3DB1883197426B500430EBE /* PinchNavViewController.h */,
-				A3DB1884197426B500430EBE /* PinchNavViewController.m */,
-				A3DB187E1974251000430EBE /* PinchNavButtonView.h */,
-				A3DB187F1974251000430EBE /* PinchNavButtonView.m */,
+				D043473619893D8000FF85BD /* PinchNavigationButtonView.h */,
+				D043473719893D8000FF85BD /* PinchNavigationButtonView.m */,
+				D043473819893D8000FF85BD /* PinchNavigationViewController.h */,
+				D043473919893D8000FF85BD /* PinchNavigationViewController.m */,
 			);
 			name = PinchNav;
 			sourceTree = "<group>";
@@ -246,9 +246,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D043474019893E4B00FF85BD /* PinchNavExampleViewController.xib in Resources */,
 				A3DB185D197424D500430EBE /* Images.xcassets in Resources */,
 				A3DB184F197424D500430EBE /* InfoPlist.strings in Resources */,
-				A3DB1858197424D500430EBE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,11 +267,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3DB185B197424D500430EBE /* ViewController.m in Sources */,
 				A3DB1855197424D500430EBE /* AppDelegate.m in Sources */,
-				A3DB1885197426B500430EBE /* PinchNavViewController.m in Sources */,
 				A3DB1851197424D500430EBE /* main.m in Sources */,
-				A3DB18821974251000430EBE /* PinchNavButtonView.m in Sources */,
+				D043473F19893E4B00FF85BD /* PinchNavExampleViewController.m in Sources */,
+				D043473A19893D8000FF85BD /* PinchNavigationButtonView.m in Sources */,
+				D043473B19893D8000FF85BD /* PinchNavigationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,14 +300,6 @@
 				A3DB184E197424D500430EBE /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		A3DB1856197424D500430EBE /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A3DB1857197424D500430EBE /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		A3DB186C197424D500430EBE /* InfoPlist.strings */ = {

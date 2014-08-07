@@ -7,12 +7,27 @@
 //
 
 #import "AppDelegate.h"
+#import "PinchNavExampleViewController.h"
+
+@interface AppDelegate()
+@end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    // Create the window
+	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    // for app-wide PinchNav menu access, init it here
+    self.pinchNav = [[PinchNavigationViewController alloc] initWithSuperview:self.window];
+    
+    // init the sample view controller
+    PinchNavExampleViewController *vc = [[PinchNavExampleViewController alloc] init];
+    self.window.rootViewController = vc;
+    [self.window makeKeyAndVisible];
+    
+    
     return YES;
 }
 							
