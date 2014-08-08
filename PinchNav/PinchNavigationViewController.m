@@ -452,6 +452,10 @@ static const CGFloat kMinIrisScale = 0.01f;
         
         [self animateSelectedIrisOutForButton:selectedButton withCompletion:^{
             
+            if([self.delegate respondsToSelector:@selector(shouldTransitionToButton:)]){
+                [self.delegate shouldTransitionToButton:selectedButton];
+            }
+            
             [self animateFadeOutAndCloseWithDelay:self.durationTransitionPeriod duration:self.durationAnimatingFadeOutAndClose onComplete:^{
                 
                  [self setMenuClosed];

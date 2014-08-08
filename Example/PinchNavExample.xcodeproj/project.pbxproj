@@ -23,6 +23,8 @@
 		D043473B19893D8000FF85BD /* PinchNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D043473919893D8000FF85BD /* PinchNavigationViewController.m */; };
 		D043473F19893E4B00FF85BD /* PinchNavExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D043473D19893E4B00FF85BD /* PinchNavExampleViewController.m */; };
 		D043474019893E4B00FF85BD /* PinchNavExampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D043473E19893E4B00FF85BD /* PinchNavExampleViewController.xib */; };
+		DEF041E41995249A00C16DBE /* PinchNavSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEF041E21995249A00C16DBE /* PinchNavSecondViewController.m */; };
+		DEF041E51995249A00C16DBE /* PinchNavSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DEF041E31995249A00C16DBE /* PinchNavSecondViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,9 @@
 		D043473C19893E4B00FF85BD /* PinchNavExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinchNavExampleViewController.h; sourceTree = "<group>"; };
 		D043473D19893E4B00FF85BD /* PinchNavExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinchNavExampleViewController.m; sourceTree = "<group>"; };
 		D043473E19893E4B00FF85BD /* PinchNavExampleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinchNavExampleViewController.xib; sourceTree = "<group>"; };
+		DEF041E11995249A00C16DBE /* PinchNavSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinchNavSecondViewController.h; sourceTree = "<group>"; };
+		DEF041E21995249A00C16DBE /* PinchNavSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinchNavSecondViewController.m; sourceTree = "<group>"; };
+		DEF041E31995249A00C16DBE /* PinchNavSecondViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinchNavSecondViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +129,9 @@
 				D043473C19893E4B00FF85BD /* PinchNavExampleViewController.h */,
 				D043473D19893E4B00FF85BD /* PinchNavExampleViewController.m */,
 				D043473E19893E4B00FF85BD /* PinchNavExampleViewController.xib */,
+				DEF041E11995249A00C16DBE /* PinchNavSecondViewController.h */,
+				DEF041E21995249A00C16DBE /* PinchNavSecondViewController.m */,
+				DEF041E31995249A00C16DBE /* PinchNavSecondViewController.xib */,
 				A3DB185C197424D500430EBE /* Images.xcassets */,
 				A3DB184B197424D500430EBE /* Supporting Files */,
 			);
@@ -248,6 +256,7 @@
 			files = (
 				D043474019893E4B00FF85BD /* PinchNavExampleViewController.xib in Resources */,
 				A3DB185D197424D500430EBE /* Images.xcassets in Resources */,
+				DEF041E51995249A00C16DBE /* PinchNavSecondViewController.xib in Resources */,
 				A3DB184F197424D500430EBE /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,6 +281,7 @@
 				D043473F19893E4B00FF85BD /* PinchNavExampleViewController.m in Sources */,
 				D043473A19893D8000FF85BD /* PinchNavigationButtonView.m in Sources */,
 				D043473B19893D8000FF85BD /* PinchNavigationViewController.m in Sources */,
+				DEF041E41995249A00C16DBE /* PinchNavSecondViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

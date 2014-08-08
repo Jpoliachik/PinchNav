@@ -8,8 +8,9 @@
 
 #import "AppDelegate.h"
 #import "PinchNavExampleViewController.h"
+#import "PinchNavSecondViewController.h"
 
-@interface AppDelegate()
+@interface AppDelegate() <PinchNavigationDelegate>
 @end
 
 @implementation AppDelegate
@@ -27,6 +28,7 @@
     PinchNavigationButtonView *button5 = [[PinchNavigationButtonView alloc] initWithTitle:@"Item5" color:[UIColor redColor] diameter:80];
     NSArray *buttonArray = @[button1, button2, button3, button4, button5];
     self.pinchNav = [[PinchNavigationViewController alloc] initWithSuperview:self.window withButtonArray:buttonArray];
+    self.pinchNav.delegate = self;
     
     // init the sample view controller
     PinchNavExampleViewController *vc = [[PinchNavExampleViewController alloc] init];
@@ -62,6 +64,13 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)shouldTransitionToButton:(PinchNavigationButtonView *)selectedButton
+{
+    // init the sample view controller
+    PinchNavSecondViewController *vc = [[PinchNavSecondViewController alloc] init];
+//    self.window.rootViewController = vc;
 }
 
 @end

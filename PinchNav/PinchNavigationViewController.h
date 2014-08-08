@@ -23,6 +23,10 @@ typedef enum PNavState{
     PNavStateFadeOutAndClose                    // fade colored view out to reveal new view
 }PNavState;
 
+@protocol PinchNavigationDelegate <NSObject>
+- (void)shouldTransitionToButton:(PinchNavigationButtonView *)selectedButton;
+@end
+
 @interface PinchNavigationViewController : UIViewController <PinchNavigationButtonDelegate>
 
 @property (nonatomic, readonly) PNavState state;
@@ -42,6 +46,8 @@ typedef enum PNavState{
 @property (nonatomic, assign) CGFloat buttonDistanceFromCenter;
 
 @property (nonatomic, assign) CGFloat irisAlpha;
+
+@property (nonatomic, weak) id<PinchNavigationDelegate> delegate;
 
 
 - (instancetype)initWithSuperview:(UIView *)superView withButtonArray:(NSArray *)buttonArray;
