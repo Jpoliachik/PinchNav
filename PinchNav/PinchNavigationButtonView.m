@@ -9,7 +9,6 @@
 #import "PinchNavigationButtonView.h"
 
 @interface PinchNavigationButtonView()
-@property (nonatomic, strong) UIColor *fillColor;
 @end
 
 @implementation PinchNavigationButtonView
@@ -47,7 +46,7 @@
     [button addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchDown];
     [button addTarget:self action:@selector(buttonRelease:) forControlEvents:UIControlEventTouchCancel];
     [button addTarget:self action:@selector(buttonRelease:) forControlEvents:UIControlEventTouchDragExit];
-    [button addTarget:self action:@selector(buttonRelease:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
     [button addTarget:self action:@selector(buttonRelease:) forControlEvents:UIControlEventTouchUpOutside];
     [self addSubview:button];
 	
@@ -113,6 +112,15 @@
 		self.transform = CGAffineTransformMakeScale(1.0,1.0);
 		[UIView commitAnimations];
 	}
+}
+
+- (void)buttonSelected:(id)sender
+{
+    [self buttonRelease:sender];
+    
+    if([self.delegate respondsToSelector:@selector(didSelectNavigationButton:)]){
+        [self.delegate didSelectNavigationButton:self];
+    }
 }
 
 @end

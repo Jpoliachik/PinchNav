@@ -10,6 +10,20 @@
 
 static const CGFloat kMinIrisScale = 0.01f;
 
+@interface PinchNavigationCircleView : UIView
+@property (nonatomic, strong) UIColor *fillColor;
+@end
+
+@implementation PinchNavigationCircleView
+- (void)drawRect:(CGRect)rect {
+    // Draw a circle
+	CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextAddEllipseInRect(ctx, rect);
+    CGContextSetFillColor(ctx, CGColorGetComponents([self.fillColor CGColor]));
+    CGContextFillPath(ctx);
+}
+@end
+
 @interface PinchNavigationViewController ()
 @property (nonatomic, strong) UIView *irisView;
 @property (nonatomic, strong) UIView *superViewReference;
@@ -49,10 +63,10 @@ static const CGFloat kMinIrisScale = 0.01f;
     self.durationAnimatingIrisOut = 0.2;
     self.durationAnimatingButtonsOutFromCenter = 0.3;
     self.durationAnimatingButtonsOutAndClose = 0.3;
-    self.durationAnimatingSelectedButtonIn = 0.4;
-    self.durationAnimatingSelectedIrisOut = 0.3;
+    self.durationAnimatingSelectedButtonIn = 0.3;
+    self.durationAnimatingSelectedIrisOut = 0.5;
     self.durationTransitionPeriod = 0.5;
-    self.durationAnimatingFadeOutAndClose = 0.2;
+    self.durationAnimatingFadeOutAndClose = 0.3;
     
     self.pinchInCutoffPoint = 0.2;
     self.pinchEndedCutoffPoint = 0.65;
@@ -152,6 +166,12 @@ static const CGFloat kMinIrisScale = 0.01f;
             }
         }
         
+    }
+    
+    if(gesture.scale > 1 && self.state == PNavStateButtonSelection){
+        [self animateButtonsOutAndCloseWithCompletion:^{
+            [self setMenuClosed];
+        }];
     }
 
     NSLog(@"Pinch: %f", gesture.scale);
@@ -330,8 +350,9 @@ static const CGFloat kMinIrisScale = 0.01f;
 	
     
 	//Add the button
-	for(UIView *buttonView in self.buttonArray)
+	for(PinchNavigationButtonView *buttonView in self.buttonArray)
 	{
+        buttonView.delegate = self;
 		[self.view addSubview:buttonView];
 	}
     
@@ -344,6 +365,102 @@ static const CGFloat kMinIrisScale = 0.01f;
             [self setMenuClosed];
         }];
     }
+}
+
+
+- (void)animateTransitionToButton:(PinchNavigationButtonView *)selectedButton withCompletion:(void(^)())onComplete
+{
+    self.state = PNavStateAnimatingSelectedButtonIn;
+    
+    [self.view bringSubviewToFront:selectedButton];
+    
+    [UIView animateWithDuration:self.durationAnimatingSelectedButtonIn
+                          delay:0
+                        options:(UIViewAnimationOptionCurveEaseInOut)
+                     animations:^{
+                         
+                         //Move the buttons back to the center.
+                         //The selected button does not fade out.
+                         for(PinchNavigationButtonView *button in self.buttonArray){
+                             if(![button isEqual:selectedButton]){
+                                 button.alpha = 0;
+                             }
+                             
+                             button.center = self.view.center;
+                         }
+                    }completion:^(BOOL finished){
+                        
+                        onComplete();
+                        
+                     }];
+
+}
+
+- (void)animateSelectedIrisOutForButton:(PinchNavigationButtonView *)selectedButton withCompletion:(void(^)())onComplete
+{
+    self.state = PNavStateAnimatingSelectedIrisOut;
+    
+    //Expand new view outward until it covers the screen.
+    //Start it small
+    PinchNavigationCircleView *animationView = [[PinchNavigationCircleView alloc] initWithFrame:CGRectMake(0, 0, selectedButton.frame.size.width - 10, selectedButton.frame.size.height - 10)];
+    animationView.fillColor = selectedButton.fillColor;
+    animationView.backgroundColor = [UIColor clearColor];
+    animationView.center = self.view.center;
+    
+    [self.view addSubview:animationView];
+    [self.view bringSubviewToFront:selectedButton];
+    
+    //Animate the circle view outwards until it fills the screen.
+    [UIView animateWithDuration:self.durationAnimatingSelectedIrisOut
+                          delay:0
+                        options:(UIViewAnimationOptionCurveEaseInOut)
+                     animations:^{
+                         animationView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 20.0, 20.0);
+                     }completion:^(BOOL finished){
+                         
+                         onComplete();
+                         
+                     }];
+
+}
+
+- (void)animateFadeOutAndCloseWithDelay:(CGFloat)delay duration:(CGFloat)duration onComplete:(void(^)())onComplete
+{
+    self.state = PNavStateTransitionPeriod;
+    
+    [UIView animateWithDuration:duration delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        
+        self.state = PNavStateFadeOutAndClose;
+        
+        self.view.alpha = 0;
+        
+    }completion:^(BOOL finished){
+        
+        for(UIView *subview in self.view.subviews){
+            [subview removeFromSuperview];
+        }
+        
+        onComplete();
+        
+    }];
+}
+
+
+- (void)didSelectNavigationButton:(PinchNavigationButtonView *)selectedButton
+{
+    [self animateTransitionToButton:selectedButton withCompletion:^{
+        
+        [self animateSelectedIrisOutForButton:selectedButton withCompletion:^{
+            
+            [self animateFadeOutAndCloseWithDelay:self.durationTransitionPeriod duration:self.durationAnimatingFadeOutAndClose onComplete:^{
+                
+                 [self setMenuClosed];
+                
+            }];
+
+        }];
+        
+    }];
 }
 
 

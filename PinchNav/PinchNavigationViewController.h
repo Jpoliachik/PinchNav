@@ -23,7 +23,7 @@ typedef enum PNavState{
     PNavStateFadeOutAndClose                    // fade colored view out to reveal new view
 }PNavState;
 
-@interface PinchNavigationViewController : UIViewController
+@interface PinchNavigationViewController : UIViewController <PinchNavigationButtonDelegate>
 
 @property (nonatomic, readonly) PNavState state;
 
