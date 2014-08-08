@@ -31,12 +31,25 @@
 	if(!self){
 		return nil;
 	}
-	
-	self.fillColor = color;
+	self.shouldAnimateOnPress = YES;
+    [self setBackgroundColor:[UIColor clearColor]];
+    
+	_fillColor = color;
     
     //Title only
     self.titleLabel = [self createLabel];
     self.titleLabel.center = self.center;
+    [self.titleLabel setText:title];
+    
+    [self addSubview:self.titleLabel];
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:self.frame];
+    [button addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchDown];
+    [button addTarget:self action:@selector(buttonRelease:) forControlEvents:UIControlEventTouchCancel];
+    [button addTarget:self action:@selector(buttonRelease:) forControlEvents:UIControlEventTouchDragExit];
+    [button addTarget:self action:@selector(buttonRelease:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(buttonRelease:) forControlEvents:UIControlEventTouchUpOutside];
+    [self addSubview:button];
 	
 	return self;
 }
@@ -50,6 +63,7 @@
 {
 	UILabel *newLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 	[newLabel setTextAlignment:NSTextAlignmentCenter];
+    [newLabel setTextColor:[UIColor whiteColor]];
 	return newLabel;
 }
 
@@ -80,7 +94,7 @@
 		//Button scale animation slightly larger
 		[UIView beginAnimations:@"ScaleSelf" context:NULL];
 		[UIView setAnimationDuration: 0.1f];
-		self.transform = CGAffineTransformMakeScale(1.4,1.4);
+		self.transform = CGAffineTransformMakeScale(1.2,1.2);
 		[UIView commitAnimations];
 	}
 }
@@ -95,7 +109,7 @@
 	if(self.shouldAnimateOnPress){
 		//Scale animation back to normal
 		[UIView beginAnimations:@"ScaleSelf" context:NULL];
-		[UIView setAnimationDuration: 0.1f];
+		[UIView setAnimationDuration: 0.3f];
 		self.transform = CGAffineTransformMakeScale(1.0,1.0);
 		[UIView commitAnimations];
 	}

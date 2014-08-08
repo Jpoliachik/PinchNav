@@ -41,6 +41,8 @@ typedef enum PNavState{
 
 @property (nonatomic, assign) CGFloat buttonDistanceFromCenter;
 
+@property (nonatomic, assign) CGFloat irisAlpha;
+
 
 - (instancetype)initWithSuperview:(UIView *)superView withButtonArray:(NSArray *)buttonArray;
 

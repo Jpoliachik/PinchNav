@@ -48,16 +48,18 @@ static const CGFloat kMinIrisScale = 0.01f;
     self.durationAnimatingIrisIn = 0.5;
     self.durationAnimatingIrisOut = 0.2;
     self.durationAnimatingButtonsOutFromCenter = 0.3;
-    self.durationAnimatingButtonsOutAndClose = 0.2;
+    self.durationAnimatingButtonsOutAndClose = 0.3;
     self.durationAnimatingSelectedButtonIn = 0.4;
     self.durationAnimatingSelectedIrisOut = 0.3;
     self.durationTransitionPeriod = 0.5;
     self.durationAnimatingFadeOutAndClose = 0.2;
     
     self.pinchInCutoffPoint = 0.2;
-    self.pinchEndedCutoffPoint = 0.5;
+    self.pinchEndedCutoffPoint = 0.65;
     
-    self.buttonDistanceFromCenter = 100;
+    self.buttonDistanceFromCenter = 110;
+    
+    self.irisAlpha = 0.3;
     
 }
 
@@ -65,7 +67,9 @@ static const CGFloat kMinIrisScale = 0.01f;
 {
     [super viewDidLoad];
     
-    
+    //Tap outside to dismiss
+	UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapToDismiss:)];
+	[self.view addGestureRecognizer:tapRecognizer];
 }
 
 - (void)didReceiveMemoryWarning
@@ -120,7 +124,7 @@ static const CGFloat kMinIrisScale = 0.01f;
                 [self animateIrisAtScale:gesture.scale withVelocity:gesture.velocity toCenterWithCompletion:^{
                     
                     [self animateButtonsOutFromCenterWithCompletion:^{
-                        
+                        self.state = PNavStateButtonSelection;
                     }];
                     
                 }];
@@ -130,20 +134,22 @@ static const CGFloat kMinIrisScale = 0.01f;
     
     if(gesture.state == UIGestureRecognizerStateEnded && self.irisView){
         
-        if(gesture.scale < self.pinchEndedCutoffPoint){
-            [self animateIrisAtScale:gesture.scale withVelocity:gesture.velocity toCenterWithCompletion:^{
-                
-                [self animateButtonsOutFromCenterWithCompletion:^{
+        if(self.state == PNavStatePinching){
+            if(gesture.scale < self.pinchEndedCutoffPoint){
+                [self animateIrisAtScale:gesture.scale withVelocity:gesture.velocity toCenterWithCompletion:^{
+                    
+                    [self animateButtonsOutFromCenterWithCompletion:^{
+                        self.state = PNavStateButtonSelection;
+                    }];
                     
                 }];
+            }else{
+                self.state = PNavStateAnimatingIrisOut;
                 
-            }];
-        }else{
-            self.state = PNavStateAnimatingIrisOut;
-            
-            [self animateIrisOutWithCompletion:^{
-                [self setMenuClosed];
-            }];
+                [self animateIrisOutWithCompletion:^{
+                    [self setMenuClosed];
+                }];
+            }
         }
         
     }
@@ -157,6 +163,7 @@ static const CGFloat kMinIrisScale = 0.01f;
 {
     [self.irisView removeFromSuperview];
     self.irisView = nil;
+    self.view.alpha = 1.0f;
     self.state = PNavStateClosed;
 }
 
@@ -212,15 +219,47 @@ static const CGFloat kMinIrisScale = 0.01f;
     //Animate each button outwards.
     //This is done with a CAKeyframeAnimation subclass,
     //So we don't need to perform this within the animation block.
-    for(int i = 0; i < self.buttonArray.count; i++)
-    {
-        PinchNavigationButtonView *button = [self.buttonArray objectAtIndex:i];
-        [self animateButtonOutwards:button forIndex:i withDistance:160];
+    [UIView animateWithDuration:self.durationAnimatingButtonsOutFromCenter delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseOut animations:^{
         
-    }
+        for(int i = 0; i < self.buttonArray.count; i++)
+        {
+            PinchNavigationButtonView *button = [self.buttonArray objectAtIndex:i];
+            [self animateButtonOutwards:button forIndex:i withDistance:self.buttonDistanceFromCenter];
+            
+        }
+        
+    }completion:^(BOOL animationCompleted){
+        
+        completion();
+        
+    }];
+   
     
     //slide in the top/bottom views
 //    [self showTopBottomViewsAnimated:YES];
+}
+
+- (void)animateButtonsOutAndCloseWithCompletion:(void(^)())completion
+{
+    self.state = PNavStateAnimatingButtonsOutAndClose;
+    
+    [UIView animateWithDuration:self.durationAnimatingButtonsOutAndClose delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        
+        for(int i = 0; i < self.buttonArray.count; i++)
+        {
+            PinchNavigationButtonView *button = [self.buttonArray objectAtIndex:i];
+            [self animateButtonOutwards:button forIndex:i withDistance:160];
+            button.alpha = 0;
+            
+        }
+        
+        self.view.alpha = 0;
+        
+    }completion:^(BOOL finished){
+        
+        completion();
+        
+    }];
 }
 
 //This method will add a circular mask at the center of the view.
@@ -269,13 +308,9 @@ static const CGFloat kMinIrisScale = 0.01f;
 	
 	//Get the new coordinates based on distance/angle
 	CGPoint newCenter = [self calculateCoordinatesFromPoint:button.center forAngle:(angleVariance * index) + angleShift withDistance:self.buttonDistanceFromCenter];
-	
-    [UIView animateWithDuration:self.durationAnimatingButtonsOutFromCenter delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        button.center = newCenter;
-        button.alpha = 1.0f;
-    }completion:^(BOOL finished){
-        
-    }];
+    
+    button.center = newCenter;
+    button.alpha = 1.0f;
 }
 
 - (void)initButtons
@@ -300,6 +335,15 @@ static const CGFloat kMinIrisScale = 0.01f;
 		[self.view addSubview:buttonView];
 	}
     
+}
+
+- (void)tapToDismiss:(UITapGestureRecognizer *)recognizer
+{
+    if(self.state == PNavStateButtonSelection){
+        [self animateButtonsOutAndCloseWithCompletion:^{
+            [self setMenuClosed];
+        }];
+    }
 }
 
 
