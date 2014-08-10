@@ -63,6 +63,7 @@
 	UILabel *newLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 	[newLabel setTextAlignment:NSTextAlignmentCenter];
     [newLabel setTextColor:[UIColor whiteColor]];
+    [newLabel setFont:[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline]];
 	return newLabel;
 }
 
