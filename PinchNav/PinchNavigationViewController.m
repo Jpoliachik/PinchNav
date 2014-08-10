@@ -47,6 +47,7 @@ static const CGFloat kMinIrisScale = 0.01f;
         // assign the pinch gesture to the superview
         if(superView) {
             self.superViewReference = superView;
+            
         
             UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinch:)];
             
@@ -80,6 +81,10 @@ static const CGFloat kMinIrisScale = 0.01f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinch:)];
+    
+    [self.view.superview addGestureRecognizer:pinchGesture];
     
     //Tap outside to dismiss
 	UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapToDismiss:)];
@@ -335,19 +340,6 @@ static const CGFloat kMinIrisScale = 0.01f;
 
 - (void)initButtons
 {
-	//Create the buttonContainer
-	//It will be a square equal to the width of the screen.
-//	CGFloat width = [[UIScreen mainScreen] bounds].size.width;
-//	self.buttonContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, width)];
-//	self.buttonContainer.center = self.view.center;
-//	[self.view addSubview:self.buttonContainer];
-	//Add constraints to have it centered always.
-    //	[self.buttonContainer makeConstraints:^(MASConstraintMaker *make){
-    //		make.center.equalTo(self.view);
-    //		make.height.equalTo(@(width));
-    //		make.width.equalTo(@(width));
-    //	}];
-	
     
 	//Add the button
 	for(PinchNavigationButtonView *buttonView in self.buttonArray)
@@ -456,6 +448,8 @@ static const CGFloat kMinIrisScale = 0.01f;
                 [self.delegate shouldTransitionToButton:selectedButton];
             }
             
+            [[self getTopViewController].view addSubview:self.view];
+            
             [self animateFadeOutAndCloseWithDelay:self.durationTransitionPeriod duration:self.durationAnimatingFadeOutAndClose onComplete:^{
                 
                  [self setMenuClosed];
@@ -467,5 +461,14 @@ static const CGFloat kMinIrisScale = 0.01f;
     }];
 }
 
+- (UIViewController *)getTopViewController
+{
+    UIViewController *controller = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while (controller.presentedViewController != nil) {
+        controller = controller.presentedViewController;
+    }
+    
+    return controller;
+}
 
 @end
