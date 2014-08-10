@@ -19,6 +19,16 @@
 		A3DB1866197424D500430EBE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3DB1848197424D500430EBE /* UIKit.framework */; };
 		A3DB186E197424D500430EBE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3DB186C197424D500430EBE /* InfoPlist.strings */; };
 		A3DB1870197424D500430EBE /* PinchNavExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A3DB186F197424D500430EBE /* PinchNavExampleTests.m */; };
+		D01E6F391996F60C005405BE /* OneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D01E6F371996F60C005405BE /* OneViewController.m */; };
+		D01E6F3A1996F60C005405BE /* OneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D01E6F381996F60C005405BE /* OneViewController.xib */; };
+		D01E6F3E1996F61A005405BE /* TwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D01E6F3C1996F61A005405BE /* TwoViewController.m */; };
+		D01E6F3F1996F61A005405BE /* TwoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D01E6F3D1996F61A005405BE /* TwoViewController.xib */; };
+		D01E6F461996F648005405BE /* ThreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D01E6F441996F648005405BE /* ThreeViewController.m */; };
+		D01E6F471996F648005405BE /* ThreeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D01E6F451996F648005405BE /* ThreeViewController.xib */; };
+		D01E6F4B1996F652005405BE /* FourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D01E6F491996F652005405BE /* FourViewController.m */; };
+		D01E6F4C1996F652005405BE /* FourViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D01E6F4A1996F652005405BE /* FourViewController.xib */; };
+		D01E6F501996F65D005405BE /* FiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D01E6F4E1996F65D005405BE /* FiveViewController.m */; };
+		D01E6F511996F65D005405BE /* FiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D01E6F4F1996F65D005405BE /* FiveViewController.xib */; };
 		D043473A19893D8000FF85BD /* PinchNavigationButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = D043473719893D8000FF85BD /* PinchNavigationButtonView.m */; };
 		D043473B19893D8000FF85BD /* PinchNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D043473919893D8000FF85BD /* PinchNavigationViewController.m */; };
 		D043473F19893E4B00FF85BD /* PinchNavExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D043473D19893E4B00FF85BD /* PinchNavExampleViewController.m */; };
@@ -54,6 +64,21 @@
 		A3DB186B197424D500430EBE /* PinchNavExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PinchNavExampleTests-Info.plist"; sourceTree = "<group>"; };
 		A3DB186D197424D500430EBE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A3DB186F197424D500430EBE /* PinchNavExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PinchNavExampleTests.m; sourceTree = "<group>"; };
+		D01E6F361996F60C005405BE /* OneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneViewController.h; sourceTree = "<group>"; };
+		D01E6F371996F60C005405BE /* OneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneViewController.m; sourceTree = "<group>"; };
+		D01E6F381996F60C005405BE /* OneViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OneViewController.xib; sourceTree = "<group>"; };
+		D01E6F3B1996F61A005405BE /* TwoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoViewController.h; sourceTree = "<group>"; };
+		D01E6F3C1996F61A005405BE /* TwoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoViewController.m; sourceTree = "<group>"; };
+		D01E6F3D1996F61A005405BE /* TwoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoViewController.xib; sourceTree = "<group>"; };
+		D01E6F431996F648005405BE /* ThreeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreeViewController.h; sourceTree = "<group>"; };
+		D01E6F441996F648005405BE /* ThreeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreeViewController.m; sourceTree = "<group>"; };
+		D01E6F451996F648005405BE /* ThreeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThreeViewController.xib; sourceTree = "<group>"; };
+		D01E6F481996F652005405BE /* FourViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourViewController.h; sourceTree = "<group>"; };
+		D01E6F491996F652005405BE /* FourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourViewController.m; sourceTree = "<group>"; };
+		D01E6F4A1996F652005405BE /* FourViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FourViewController.xib; sourceTree = "<group>"; };
+		D01E6F4D1996F65D005405BE /* FiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FiveViewController.h; sourceTree = "<group>"; };
+		D01E6F4E1996F65D005405BE /* FiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FiveViewController.m; sourceTree = "<group>"; };
+		D01E6F4F1996F65D005405BE /* FiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FiveViewController.xib; sourceTree = "<group>"; };
 		D043473619893D8000FF85BD /* PinchNavigationButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinchNavigationButtonView.h; path = ../PinchNav/PinchNavigationButtonView.h; sourceTree = "<group>"; };
 		D043473719893D8000FF85BD /* PinchNavigationButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PinchNavigationButtonView.m; path = ../PinchNav/PinchNavigationButtonView.m; sourceTree = "<group>"; };
 		D043473819893D8000FF85BD /* PinchNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinchNavigationViewController.h; path = ../PinchNav/PinchNavigationViewController.h; sourceTree = "<group>"; };
@@ -134,6 +159,21 @@
 				DEF041E31995249A00C16DBE /* PinchNavSecondViewController.xib */,
 				A3DB185C197424D500430EBE /* Images.xcassets */,
 				A3DB184B197424D500430EBE /* Supporting Files */,
+				D01E6F361996F60C005405BE /* OneViewController.h */,
+				D01E6F371996F60C005405BE /* OneViewController.m */,
+				D01E6F381996F60C005405BE /* OneViewController.xib */,
+				D01E6F3B1996F61A005405BE /* TwoViewController.h */,
+				D01E6F3C1996F61A005405BE /* TwoViewController.m */,
+				D01E6F3D1996F61A005405BE /* TwoViewController.xib */,
+				D01E6F431996F648005405BE /* ThreeViewController.h */,
+				D01E6F441996F648005405BE /* ThreeViewController.m */,
+				D01E6F451996F648005405BE /* ThreeViewController.xib */,
+				D01E6F481996F652005405BE /* FourViewController.h */,
+				D01E6F491996F652005405BE /* FourViewController.m */,
+				D01E6F4A1996F652005405BE /* FourViewController.xib */,
+				D01E6F4D1996F65D005405BE /* FiveViewController.h */,
+				D01E6F4E1996F65D005405BE /* FiveViewController.m */,
+				D01E6F4F1996F65D005405BE /* FiveViewController.xib */,
 			);
 			path = PinchNavExample;
 			sourceTree = "<group>";
@@ -255,9 +295,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D043474019893E4B00FF85BD /* PinchNavExampleViewController.xib in Resources */,
+				D01E6F471996F648005405BE /* ThreeViewController.xib in Resources */,
+				D01E6F4C1996F652005405BE /* FourViewController.xib in Resources */,
 				A3DB185D197424D500430EBE /* Images.xcassets in Resources */,
 				DEF041E51995249A00C16DBE /* PinchNavSecondViewController.xib in Resources */,
+				D01E6F3F1996F61A005405BE /* TwoViewController.xib in Resources */,
 				A3DB184F197424D500430EBE /* InfoPlist.strings in Resources */,
+				D01E6F511996F65D005405BE /* FiveViewController.xib in Resources */,
+				D01E6F3A1996F60C005405BE /* OneViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,10 +323,15 @@
 			files = (
 				A3DB1855197424D500430EBE /* AppDelegate.m in Sources */,
 				A3DB1851197424D500430EBE /* main.m in Sources */,
+				D01E6F4B1996F652005405BE /* FourViewController.m in Sources */,
 				D043473F19893E4B00FF85BD /* PinchNavExampleViewController.m in Sources */,
 				D043473A19893D8000FF85BD /* PinchNavigationButtonView.m in Sources */,
 				D043473B19893D8000FF85BD /* PinchNavigationViewController.m in Sources */,
+				D01E6F391996F60C005405BE /* OneViewController.m in Sources */,
+				D01E6F461996F648005405BE /* ThreeViewController.m in Sources */,
+				D01E6F501996F65D005405BE /* FiveViewController.m in Sources */,
 				DEF041E41995249A00C16DBE /* PinchNavSecondViewController.m in Sources */,
+				D01E6F3E1996F61A005405BE /* TwoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
