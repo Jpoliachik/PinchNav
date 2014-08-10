@@ -5,18 +5,6 @@
       location = "container:"
       name = "PinchNav">
       <FileRef
-         location = "group:PinchNavViewController.h">
-      </FileRef>
-      <FileRef
-         location = "group:PinchNavViewController.m">
-      </FileRef>
-      <FileRef
-         location = "group:PinchNav/PinchNavButtonView.h">
-      </FileRef>
-      <FileRef
-         location = "group:PinchNav/PinchNavButtonView.m">
-      </FileRef>
-      <FileRef
          location = "group:PinchNav/PinchNavigationButtonView.h">
       </FileRef>
       <FileRef
