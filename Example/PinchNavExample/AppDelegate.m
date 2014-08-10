@@ -7,8 +7,11 @@
 //
 
 #import "AppDelegate.h"
-#import "PinchNavExampleViewController.h"
-#import "PinchNavSecondViewController.h"
+#import "OneViewController.h"
+#import "TwoViewController.h"
+#import "ThreeViewController.h"
+#import "FourViewController.h"
+#import "FiveViewController.h"
 
 @interface AppDelegate() <PinchNavigationDelegate>
 @end
@@ -21,17 +24,25 @@
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     // for app-wide PinchNav menu access, init it here
-    PinchNavigationButtonView *button1 = [[PinchNavigationButtonView alloc] initWithTitle:@"Item1" color:[UIColor redColor] diameter:80];
-    PinchNavigationButtonView *button2 = [[PinchNavigationButtonView alloc] initWithTitle:@"Item2" color:[UIColor redColor] diameter:80];
-    PinchNavigationButtonView *button3 = [[PinchNavigationButtonView alloc] initWithTitle:@"Item3" color:[UIColor redColor] diameter:80];
-    PinchNavigationButtonView *button4 = [[PinchNavigationButtonView alloc] initWithTitle:@"Item4" color:[UIColor redColor] diameter:80];
-    PinchNavigationButtonView *button5 = [[PinchNavigationButtonView alloc] initWithTitle:@"Item5" color:[UIColor redColor] diameter:80];
+    PinchNavigationButtonView *button1 = [[PinchNavigationButtonView alloc] initWithTitle:@"Feed" color:[UIColor colorWithRed:0.38 green:0.73 blue:0.82 alpha:1] diameter:80];
+    PinchNavigationButtonView *button2 = [[PinchNavigationButtonView alloc] initWithTitle:@"Messages" color:[UIColor colorWithRed:0.96 green:0.77 blue:0.44 alpha:1] diameter:80];
+    PinchNavigationButtonView *button3 = [[PinchNavigationButtonView alloc] initWithTitle:@"Images" color:[UIColor colorWithRed:0.66 green:0.73 blue:0.38 alpha:1] diameter:80];
+    PinchNavigationButtonView *button4 = [[PinchNavigationButtonView alloc] initWithTitle:@"About" color:[UIColor colorWithRed:0.91 green:0.41 blue:0.48 alpha:1] diameter:80];
+    PinchNavigationButtonView *button5 = [[PinchNavigationButtonView alloc] initWithTitle:@"Settings" color:[UIColor colorWithRed:0.65 green:0.52 blue:0.73 alpha:1] diameter:80];
+    
+    // assign the buttons tags so we can later tell which one is which
+    button1.tag = 1;
+    button2.tag = 2;
+    button3.tag = 3;
+    button4.tag = 4;
+    button5.tag = 5;
+    
     NSArray *buttonArray = @[button1, button2, button3, button4, button5];
     self.pinchNav = [[PinchNavigationViewController alloc] initWithSuperview:self.window withButtonArray:buttonArray];
     self.pinchNav.delegate = self;
     
     // init the sample view controller
-    PinchNavExampleViewController *vc = [[PinchNavExampleViewController alloc] init];
+    OneViewController *vc = [[OneViewController alloc] init];
     self.window.rootViewController = vc;
     [self.window makeKeyAndVisible];
     
@@ -68,9 +79,31 @@
 
 - (void)shouldTransitionToButton:(PinchNavigationButtonView *)selectedButton
 {
-    // init the sample view controller
-    PinchNavSecondViewController *vc = [[PinchNavSecondViewController alloc] init];
-//    self.window.rootViewController = vc;
+    // switch root view controllers
+    // use the tag of the button to determine which was selected
+    UIViewController *newRoot;
+    switch (selectedButton.tag) {
+        case 1:
+            newRoot = [[OneViewController alloc] init];
+            break;
+        case 2:
+            newRoot = [[TwoViewController alloc] init];
+            break;
+        case 3:
+            newRoot = [[ThreeViewController alloc] init];
+            break;
+        case 4:
+            newRoot = [[FourViewController alloc] init];
+            break;
+        case 5:
+            newRoot = [[FiveViewController alloc] init];
+            break;
+        default:
+            newRoot = self.window.rootViewController;
+            break;
+    }
+    
+    self.window.rootViewController = newRoot;
 }
 
 @end

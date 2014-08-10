@@ -31,10 +31,6 @@
 		D01E6F511996F65D005405BE /* FiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D01E6F4F1996F65D005405BE /* FiveViewController.xib */; };
 		D043473A19893D8000FF85BD /* PinchNavigationButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = D043473719893D8000FF85BD /* PinchNavigationButtonView.m */; };
 		D043473B19893D8000FF85BD /* PinchNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D043473919893D8000FF85BD /* PinchNavigationViewController.m */; };
-		D043473F19893E4B00FF85BD /* PinchNavExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D043473D19893E4B00FF85BD /* PinchNavExampleViewController.m */; };
-		D043474019893E4B00FF85BD /* PinchNavExampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D043473E19893E4B00FF85BD /* PinchNavExampleViewController.xib */; };
-		DEF041E41995249A00C16DBE /* PinchNavSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEF041E21995249A00C16DBE /* PinchNavSecondViewController.m */; };
-		DEF041E51995249A00C16DBE /* PinchNavSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DEF041E31995249A00C16DBE /* PinchNavSecondViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,12 +79,6 @@
 		D043473719893D8000FF85BD /* PinchNavigationButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PinchNavigationButtonView.m; path = ../PinchNav/PinchNavigationButtonView.m; sourceTree = "<group>"; };
 		D043473819893D8000FF85BD /* PinchNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinchNavigationViewController.h; path = ../PinchNav/PinchNavigationViewController.h; sourceTree = "<group>"; };
 		D043473919893D8000FF85BD /* PinchNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PinchNavigationViewController.m; path = ../PinchNav/PinchNavigationViewController.m; sourceTree = "<group>"; };
-		D043473C19893E4B00FF85BD /* PinchNavExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinchNavExampleViewController.h; sourceTree = "<group>"; };
-		D043473D19893E4B00FF85BD /* PinchNavExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinchNavExampleViewController.m; sourceTree = "<group>"; };
-		D043473E19893E4B00FF85BD /* PinchNavExampleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinchNavExampleViewController.xib; sourceTree = "<group>"; };
-		DEF041E11995249A00C16DBE /* PinchNavSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinchNavSecondViewController.h; sourceTree = "<group>"; };
-		DEF041E21995249A00C16DBE /* PinchNavSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinchNavSecondViewController.m; sourceTree = "<group>"; };
-		DEF041E31995249A00C16DBE /* PinchNavSecondViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PinchNavSecondViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,14 +141,6 @@
 			children = (
 				A3DB1853197424D500430EBE /* AppDelegate.h */,
 				A3DB1854197424D500430EBE /* AppDelegate.m */,
-				D043473C19893E4B00FF85BD /* PinchNavExampleViewController.h */,
-				D043473D19893E4B00FF85BD /* PinchNavExampleViewController.m */,
-				D043473E19893E4B00FF85BD /* PinchNavExampleViewController.xib */,
-				DEF041E11995249A00C16DBE /* PinchNavSecondViewController.h */,
-				DEF041E21995249A00C16DBE /* PinchNavSecondViewController.m */,
-				DEF041E31995249A00C16DBE /* PinchNavSecondViewController.xib */,
-				A3DB185C197424D500430EBE /* Images.xcassets */,
-				A3DB184B197424D500430EBE /* Supporting Files */,
 				D01E6F361996F60C005405BE /* OneViewController.h */,
 				D01E6F371996F60C005405BE /* OneViewController.m */,
 				D01E6F381996F60C005405BE /* OneViewController.xib */,
@@ -174,6 +156,8 @@
 				D01E6F4D1996F65D005405BE /* FiveViewController.h */,
 				D01E6F4E1996F65D005405BE /* FiveViewController.m */,
 				D01E6F4F1996F65D005405BE /* FiveViewController.xib */,
+				A3DB185C197424D500430EBE /* Images.xcassets */,
+				A3DB184B197424D500430EBE /* Supporting Files */,
 			);
 			path = PinchNavExample;
 			sourceTree = "<group>";
@@ -294,11 +278,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D043474019893E4B00FF85BD /* PinchNavExampleViewController.xib in Resources */,
 				D01E6F471996F648005405BE /* ThreeViewController.xib in Resources */,
 				D01E6F4C1996F652005405BE /* FourViewController.xib in Resources */,
 				A3DB185D197424D500430EBE /* Images.xcassets in Resources */,
-				DEF041E51995249A00C16DBE /* PinchNavSecondViewController.xib in Resources */,
 				D01E6F3F1996F61A005405BE /* TwoViewController.xib in Resources */,
 				A3DB184F197424D500430EBE /* InfoPlist.strings in Resources */,
 				D01E6F511996F65D005405BE /* FiveViewController.xib in Resources */,
@@ -324,13 +306,11 @@
 				A3DB1855197424D500430EBE /* AppDelegate.m in Sources */,
 				A3DB1851197424D500430EBE /* main.m in Sources */,
 				D01E6F4B1996F652005405BE /* FourViewController.m in Sources */,
-				D043473F19893E4B00FF85BD /* PinchNavExampleViewController.m in Sources */,
 				D043473A19893D8000FF85BD /* PinchNavigationButtonView.m in Sources */,
 				D043473B19893D8000FF85BD /* PinchNavigationViewController.m in Sources */,
 				D01E6F391996F60C005405BE /* OneViewController.m in Sources */,
 				D01E6F461996F648005405BE /* ThreeViewController.m in Sources */,
 				D01E6F501996F65D005405BE /* FiveViewController.m in Sources */,
-				DEF041E41995249A00C16DBE /* PinchNavSecondViewController.m in Sources */,
 				D01E6F3E1996F61A005405BE /* TwoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
