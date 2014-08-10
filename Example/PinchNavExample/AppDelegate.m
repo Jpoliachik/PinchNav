@@ -38,7 +38,7 @@
     button5.tag = 5;
     
     NSArray *buttonArray = @[button1, button2, button3, button4, button5];
-    self.pinchNav = [[PinchNavigationViewController alloc] initWithSuperview:self.window withButtonArray:buttonArray];
+    self.pinchNav = [[PinchNavigationViewController alloc] initWithGestureRecognizingView:self.window withButtonArray:buttonArray];
     self.pinchNav.delegate = self;
     
     // init the sample view controller

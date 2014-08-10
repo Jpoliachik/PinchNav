@@ -26,14 +26,13 @@ static const CGFloat kMinIrisScale = 0.01f;
 
 @interface PinchNavigationViewController ()
 @property (nonatomic, strong) UIView *irisView;
-@property (nonatomic, strong) UIView *superViewReference;
 @property (nonatomic, readwrite) PNavState state;
 @property (nonatomic, strong) NSArray *buttonArray;
 @end
 
 @implementation PinchNavigationViewController
 
-- (instancetype)initWithSuperview:(UIView *)superView withButtonArray:(NSArray *)buttonArray
+- (instancetype)initWithGestureRecognizingView:(UIView *)gestureView withButtonArray:(NSArray *)buttonArray
 {
     self = [super init];
     if (self) {
@@ -45,13 +44,11 @@ static const CGFloat kMinIrisScale = 0.01f;
         [self setDefaultProperties];
         
         // assign the pinch gesture to the superview
-        if(superView) {
-            self.superViewReference = superView;
-            
+        if(gestureView) {
         
             UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinch:)];
             
-            [superView addGestureRecognizer:pinchGesture];
+            [gestureView addGestureRecognizer:pinchGesture];
         }
     }
     
@@ -75,20 +72,25 @@ static const CGFloat kMinIrisScale = 0.01f;
     self.buttonDistanceFromCenter = 110;
     
     self.irisAlpha = 0.3;
+    self.irisColor = [UIColor blackColor];
+}
+
+- (void)loadView
+{
+    [super loadView];
     
+//    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinch:)];
+//    [self.view.superview addGestureRecognizer:pinchGesture];
+    
+    //Tap outside to dismiss
+	UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapToDismiss:)];
+	[self.view addGestureRecognizer:tapRecognizer];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinch:)];
-    
-    [self.view.superview addGestureRecognizer:pinchGesture];
-    
-    //Tap outside to dismiss
-	UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapToDismiss:)];
-	[self.view addGestureRecognizer:tapRecognizer];
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,10 +110,12 @@ static const CGFloat kMinIrisScale = 0.01f;
     if(gesture.scale < 1.0f && (self.state == PNavStateClosed || self.state == PNavStatePinching)){
         
         self.state = PNavStatePinching;
-        
+      
+        // if the nav view currently has no superview, add it to the top view controller.
         if(!self.view.superview){
-            self.view.frame = self.superViewReference.frame;
-            [self.superViewReference addSubview:self.view];
+            UIViewController *superVC = [self getTopViewController];
+            self.view.frame = superVC.view.frame;
+            [superVC.view addSubview:self.view];
         }
         
         if(!self.irisView){
@@ -120,8 +124,8 @@ static const CGFloat kMinIrisScale = 0.01f;
             self.irisView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100000, 100000)];
             //Set the center at the screen's center, so we have plenty of room for scale animating.
             self.irisView.center = self.view.center;
-            self.irisView.backgroundColor = [UIColor blackColor];
-            self.irisView.alpha = 0.3;
+            self.irisView.backgroundColor = self.irisColor;
+            self.irisView.alpha = self.irisAlpha;
             //Set alpha to 0 to start. Then we animate the fade.
             [self.view addSubview:self.irisView];
             //        [self.view sendSubviewToBack:self.irisView];
@@ -178,9 +182,6 @@ static const CGFloat kMinIrisScale = 0.01f;
             [self setMenuClosed];
         }];
     }
-
-    NSLog(@"Pinch: %f", gesture.scale);
-    NSLog(@"Velocity: %f", gesture.velocity);
     
 }
 

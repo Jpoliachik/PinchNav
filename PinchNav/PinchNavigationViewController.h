@@ -45,11 +45,12 @@ typedef enum PNavState{
 
 @property (nonatomic, assign) CGFloat buttonDistanceFromCenter;
 
+@property (nonatomic, strong) UIColor *irisColor;
 @property (nonatomic, assign) CGFloat irisAlpha;
 
 @property (nonatomic, weak) id<PinchNavigationDelegate> delegate;
 
 
-- (instancetype)initWithSuperview:(UIView *)superView withButtonArray:(NSArray *)buttonArray;
+- (instancetype)initWithGestureRecognizingView:(UIView *)gestureView withButtonArray:(NSArray *)buttonArray;
 
 @end
