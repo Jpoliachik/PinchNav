@@ -79,7 +79,7 @@ Example:
 }
 ```
 
-Possible Future Improvements
+Future Improvements
 ==============
 -   Allow fully custom `UIViews` for `PinchNavigationButtonViews`
 -   Easy integration of icons in `PinchNavigationButtonViews`
@@ -88,3 +88,8 @@ Possible Future Improvements
 -   Separate 'Pinch Out' entry animation
 -   Custom center point. Use for 'Pinch Out' location
 -   Allow other custom gestures or input for startup animation
+
+About
+========
+- Design by [Mitch Pruitt](https://github.com/mitchpruitt)
+- Under Apache license. See LICENSE file for more information.
