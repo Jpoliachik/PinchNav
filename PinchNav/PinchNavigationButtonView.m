@@ -30,17 +30,17 @@
 	if(!self){
 		return nil;
 	}
-	self.shouldAnimateOnPress = YES;
+	_shouldAnimateOnPress = YES;
     [self setBackgroundColor:[UIColor clearColor]];
     
 	_fillColor = color;
     
     //Title only
-    self.titleLabel = [self createLabel];
-    self.titleLabel.center = self.center;
-    [self.titleLabel setText:title];
+    _titleLabel = [self createLabel];
+    _titleLabel.center = self.center;
+    [_titleLabel setText:title];
     
-    [self addSubview:self.titleLabel];
+    [self addSubview:_titleLabel];
     
     UIButton *button = [[UIButton alloc] initWithFrame:self.frame];
     [button addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchDown];
