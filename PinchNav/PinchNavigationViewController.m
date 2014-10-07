@@ -80,6 +80,8 @@ static const CGFloat kMinIrisScale = 0.01f;
     
     self.irisAlpha                              = 0.3f;
     self.irisColor = [UIColor blackColor];
+    
+    self.enabled = YES;
 }
 
 - (UIView *)buttonContainer
@@ -138,6 +140,10 @@ static const CGFloat kMinIrisScale = 0.01f;
 
 - (void)onPinch:(UIPinchGestureRecognizer *)gesture
 {
+    if (!self.enabled) {
+        return;
+    }
+    
     if ( gesture.scale < 1.0f && ( self.state == PNavStateClosed || self.state == PNavStatePinching ) ) {
         
         self.state = PNavStatePinching;

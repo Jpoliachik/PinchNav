@@ -50,6 +50,8 @@ typedef enum PNavState{
 
 @property (nonatomic, weak) id<PinchNavigationDelegate> delegate;
 
+@property (nonatomic, assign) BOOL enabled;
+
 
 - (instancetype)initWithGestureRecognizingView:(UIView *)gestureView withButtonArray:(NSArray *)buttonArray;
 
