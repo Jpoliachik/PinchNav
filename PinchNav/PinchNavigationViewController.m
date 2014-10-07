@@ -86,16 +86,15 @@ static const CGFloat kMinIrisScale = 0.01f;
 {
     if (!_buttonContainer) {
         
-        CGFloat shortSize = MIN(self.view.bounds.size.width, self.view.bounds.size.height);
-        NSLog(@"short side: %f", shortSize);
+        CGFloat shortSide = MIN(self.view.bounds.size.width, self.view.bounds.size.height);
         _buttonContainer = [[UIView alloc] initWithFrame:CGRectZero];
         [self.view addSubview:_buttonContainer];
         
         [_buttonContainer mas_makeConstraints:^(MASConstraintMaker *make) {
             
             make.center.equalTo(self.view);
-            make.width.equalTo(@(shortSize));
-            make.height.equalTo(@(shortSize));
+            make.width.equalTo(@(shortSide));
+            make.height.equalTo(@(shortSide));
             
         }];
         
@@ -113,7 +112,6 @@ static const CGFloat kMinIrisScale = 0.01f;
         buttonView.alpha = 0.0;
         buttonView.hidden = NO;
         CGPoint center = CGPointMake(self.buttonContainer.bounds.size.width / 2, self.buttonContainer.bounds.size.height / 2);
-        NSLog(@"button center: %@", NSStringFromCGPoint(center));
         buttonView.center = center;
 		[self.buttonContainer addSubview:buttonView];
 	}
@@ -162,7 +160,7 @@ static const CGFloat kMinIrisScale = 0.01f;
             }];
             
             // Circle should fit the view.
-            CGFloat shortSide = (self.view.bounds.size.width < self.view.bounds.size.height) ? self.view.bounds.size.width : self.view.bounds.size.height;
+            CGFloat shortSide = MIN(self.view.bounds.size.width, self.view.bounds.size.height);
             
             // Create the mask.
             [self addMaskCircleToView:self.irisView WithRadius:shortSide/2];
