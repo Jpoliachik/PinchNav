@@ -1,6 +1,6 @@
 PinchNavigation
 ========
-***v0.01***
+***v0.2***
 
 A iOS navigation menu accessed by a `UIPinchGestureRecognizer`.
 Pinch in to reveal a menu of customizable items and transition to
