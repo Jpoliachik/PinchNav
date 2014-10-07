@@ -7,6 +7,7 @@
 //
 
 #import "PinchNavigationViewController.h"
+#import "Masonry.h"
 
 static const CGFloat kMinIrisScale = 0.01f;
 
@@ -27,6 +28,7 @@ static const CGFloat kMinIrisScale = 0.01f;
 
 @interface PinchNavigationViewController ()
 @property (nonatomic, strong) UIView *irisView;
+@property (nonatomic, strong) UIView *buttonContainer;
 @property (nonatomic, readwrite) PNavState state;
 @property (nonatomic, strong) NSArray *buttonArray;
 @end
@@ -80,6 +82,28 @@ static const CGFloat kMinIrisScale = 0.01f;
     self.irisColor = [UIColor blackColor];
 }
 
+- (UIView *)buttonContainer
+{
+    if (!_buttonContainer) {
+        
+        CGFloat shortSize = MIN(self.view.bounds.size.width, self.view.bounds.size.height);
+        NSLog(@"short side: %f", shortSize);
+        _buttonContainer = [[UIView alloc] initWithFrame:CGRectZero];
+        [self.view addSubview:_buttonContainer];
+        
+        [_buttonContainer mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.center.equalTo(self.view);
+            make.width.equalTo(@(shortSize));
+            make.height.equalTo(@(shortSize));
+            
+        }];
+        
+    }
+    
+    return _buttonContainer;
+}
+
 - (void)initButtons
 {
 	// buttons are created just before showing them
@@ -88,8 +112,10 @@ static const CGFloat kMinIrisScale = 0.01f;
         buttonView.delegate = self;
         buttonView.alpha = 0.0;
         buttonView.hidden = NO;
-        buttonView.center = self.view.center;
-		[self.view addSubview:buttonView];
+        CGPoint center = CGPointMake(self.buttonContainer.bounds.size.width / 2, self.buttonContainer.bounds.size.height / 2);
+        NSLog(@"button center: %@", NSStringFromCGPoint(center));
+        buttonView.center = center;
+		[self.buttonContainer addSubview:buttonView];
 	}
 }
 
@@ -100,6 +126,7 @@ static const CGFloat kMinIrisScale = 0.01f;
     // Tap outside to dismiss
 	UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapToDismiss:)];
 	[self.view addGestureRecognizer:tapRecognizer];
+    
 }
 
 #pragma mark - Getters / Setters
@@ -109,7 +136,7 @@ static const CGFloat kMinIrisScale = 0.01f;
     _pinchInCutoffPoint = MIN(1.0f, MAX(kMinIrisScale, pinchInCutoffPoint));
 }
 
-# pragma mark - Public Methods
+# pragma mark - Gestures
 
 - (void)onPinch:(UIPinchGestureRecognizer *)gesture
 {
@@ -117,12 +144,7 @@ static const CGFloat kMinIrisScale = 0.01f;
         
         self.state = PNavStatePinching;
       
-        // if the nav view currently has no superview, add it to the top view controller.
-        if ( !self.view.superview ) {
-            UIViewController *superVC = [self getTopViewController];
-            self.view.frame = superVC.view.frame;
-            [superVC.view addSubview:self.view];
-        }
+        [self addToSuperIfNeeded];
         
         if ( !self.irisView ) {
             
@@ -194,13 +216,17 @@ static const CGFloat kMinIrisScale = 0.01f;
     
 }
 
-- (void)setMenuClosed
+- (void)tapToDismiss:(UITapGestureRecognizer *)recognizer
 {
-    [self.irisView removeFromSuperview];
-    self.irisView = nil;
-    self.view.alpha = 1.0f;
-    self.state = PNavStateClosed;
+    if ( self.state == PNavStateButtonSelection ) {
+        [self animateButtonsOutAndCloseWithCompletion:^{
+            [self setMenuClosed];
+        }];
+    }
 }
+
+#pragma mark - Button Selection
+
 
 - (void)didSelectNavigationButton:(PinchNavigationButtonView *)selectedButton
 {
@@ -208,15 +234,19 @@ static const CGFloat kMinIrisScale = 0.01f;
         
         [self animateSelectedIrisOutForButton:selectedButton withCompletion:^{
             
+            UIView *snapshotView = [self.view snapshotViewAfterScreenUpdates:NO];
+            
+            [self removeFromParentViewController];
+            
             if ( [self.delegate respondsToSelector:@selector(shouldTransitionToButton:)] ) {
                 [self.delegate shouldTransitionToButton:selectedButton];
             }
             
             // the root view controller may have changed.
             // add self as a subview again to finish the animation and close gracefully
-            [[self getTopViewController].view addSubview:self.view];
+            [[self getTopViewController].view addSubview:snapshotView];
             
-            [self animateFadeOutAndCloseWithDelay:self.durationTransitionPeriod duration:self.durationAnimatingFadeOutAndClose onComplete:^{
+            [self animateFadeOutAndCloseView:snapshotView withDelay:self.durationTransitionPeriod duration:self.durationAnimatingFadeOutAndClose onComplete:^{
                 
                 [self setMenuClosed];
                 
@@ -227,16 +257,25 @@ static const CGFloat kMinIrisScale = 0.01f;
     }];
 }
 
-- (void)tapToDismiss:(UITapGestureRecognizer *)recognizer
+#pragma mark - Private Animations
+
+- (void)addToSuperIfNeeded
 {
-    if ( self.state == PNavStateButtonSelection ) {
-        [self animateButtonsOutAndCloseWithCompletion:^{
-            [self setMenuClosed];
+    // if the nav view currently has no superview, add it to the top view controller.
+    if ( !self.view.superview ) {
+        UIViewController *superVC = [self getTopViewController];
+        self.view.frame = superVC.view.frame;
+        [superVC.view addSubview:self.view];
+        [superVC addChildViewController:self];
+        
+        // constraints
+        [self.view mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(superVC.view);
         }];
     }
+
 }
 
-#pragma mark - Private Animations
 
 - (void)animateIrisAtScale:(CGFloat)currentScale withVelocity:(CGFloat)currentVelocity toCenterWithCompletion:(void (^)())completion
 {
@@ -279,8 +318,15 @@ static const CGFloat kMinIrisScale = 0.01f;
     
     // Get rid of animation view, and switch to using self as the background.
     self.irisView.layer.mask = nil;
-    [self.irisView setFrame:self.view.frame];
+    // reset transform
+    self.irisView.transform = CGAffineTransformIdentity;
+    // pin to edges
+    [self.irisView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
     
+    [self.view bringSubviewToFront:self.buttonContainer];
+    [self.view layoutIfNeeded];
     [self initButtons];
     
     // Animate each button outwards.
@@ -342,7 +388,7 @@ static const CGFloat kMinIrisScale = 0.01f;
                                  button.alpha = 0;
                              }
                              
-                             button.center = self.view.center;
+                             button.center = CGPointMake(self.buttonContainer.bounds.size.width / 2, self.buttonContainer.bounds.size.height / 2);
                          }
                      }completion:^(BOOL finished) {
                          
@@ -361,10 +407,10 @@ static const CGFloat kMinIrisScale = 0.01f;
     PinchNavigationCircleView *animationView = [[PinchNavigationCircleView alloc] initWithFrame:CGRectMake(0, 0, selectedButton.frame.size.width - 10, selectedButton.frame.size.height - 10)];
     animationView.fillColor = selectedButton.fillColor;
     animationView.backgroundColor = [UIColor clearColor];
-    animationView.center = self.view.center;
+    animationView.center = self.buttonContainer.center;
     
     [self.view addSubview:animationView];
-    [self.view bringSubviewToFront:selectedButton];
+    [self.view bringSubviewToFront:self.buttonContainer];
     
     // Animate the circle view outwards until it fills the screen.
     [UIView animateWithDuration:self.durationAnimatingSelectedIrisOut
@@ -381,7 +427,7 @@ static const CGFloat kMinIrisScale = 0.01f;
 }
 
 
-- (void)animateFadeOutAndCloseWithDelay:(CGFloat)delay duration:(CGFloat)duration onComplete:(void(^)())onComplete
+- (void)animateFadeOutAndCloseView:(UIView *)view withDelay:(CGFloat)delay duration:(CGFloat)duration onComplete:(void(^)())onComplete
 {
     self.state = PNavStateTransitionPeriod;
     
@@ -389,13 +435,11 @@ static const CGFloat kMinIrisScale = 0.01f;
         
         self.state = PNavStateFadeOutAndClose;
         
-        self.view.alpha = 0;
+        view.alpha = 0.0f;
         
     } completion:^(BOOL finished) {
         
-        for(UIView *subview in self.view.subviews){
-            [subview removeFromSuperview];
-        }
+        [view removeFromSuperview];
         
         onComplete();
         
@@ -455,6 +499,16 @@ static const CGFloat kMinIrisScale = 0.01f;
     }
     
     return controller;
+}
+
+- (void)setMenuClosed
+{
+    self.irisView = nil;
+    self.buttonContainer = nil;
+    [self.view.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    self.view.alpha = 1.0f;
+    self.state = PNavStateClosed;
 }
 
 @end
