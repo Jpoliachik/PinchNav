@@ -29,6 +29,7 @@ static const CGFloat kMinIrisScale = 0.01f;
 @interface PinchNavigationViewController ()
 @property (nonatomic, strong) UIView *irisView;
 @property (nonatomic, strong) UIView *buttonContainer;
+@property (nonatomic, strong) UIView *bottomContainer;
 @property (nonatomic, readwrite) PNavState state;
 @property (nonatomic, strong) NSArray *buttonArray;
 @end
@@ -52,7 +53,6 @@ static const CGFloat kMinIrisScale = 0.01f;
         if(gestureView) {
         
             UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinch:)];
-            
             [gestureView addGestureRecognizer:pinchGesture];
         }
     }
@@ -84,27 +84,6 @@ static const CGFloat kMinIrisScale = 0.01f;
     self.enabled = YES;
 }
 
-- (UIView *)buttonContainer
-{
-    if (!_buttonContainer) {
-        
-        CGFloat shortSide = MIN(self.view.bounds.size.width, self.view.bounds.size.height);
-        _buttonContainer = [[UIView alloc] initWithFrame:CGRectZero];
-        [self.view addSubview:_buttonContainer];
-        
-        [_buttonContainer mas_makeConstraints:^(MASConstraintMaker *make) {
-            
-            make.center.equalTo(self.view);
-            make.width.equalTo(@(shortSide));
-            make.height.equalTo(@(shortSide));
-            
-        }];
-        
-    }
-    
-    return _buttonContainer;
-}
-
 - (void)initButtons
 {
 	// buttons are created just before showing them
@@ -134,6 +113,66 @@ static const CGFloat kMinIrisScale = 0.01f;
 - (void)setPinchInCutoffPoint:(CGFloat)pinchInCutoffPoint
 {
     _pinchInCutoffPoint = MIN(1.0f, MAX(kMinIrisScale, pinchInCutoffPoint));
+}
+
+- (UIView *)buttonContainer
+{
+    if (!_buttonContainer) {
+        
+        CGFloat shortSide = MIN(self.view.bounds.size.width, self.view.bounds.size.height);
+        _buttonContainer = [[UIView alloc] init];
+        [self.view addSubview:_buttonContainer];
+        
+        [_buttonContainer mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.center.equalTo(self.view);
+            make.width.equalTo(@(shortSide));
+            make.height.equalTo(@(shortSide));
+            
+        }];
+        
+    }
+    
+    return _buttonContainer;
+}
+
+- (UIView *)bottomContainer
+{
+    if (!_bottomContainer) {
+        
+        _bottomContainer = [[UIView alloc] init];
+        [self.view addSubview:_bottomContainer];
+        [_bottomContainer setHidden:YES];
+        
+        [_bottomContainer mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.view.mas_left);
+            make.right.equalTo(self.view.mas_right);
+            make.bottom.equalTo(self.view.mas_bottom);
+            make.top.equalTo(self.buttonContainer.mas_bottom);
+            
+        }];
+
+    }
+    
+    return _bottomContainer;
+}
+
+- (void)setBottomRightButton:(PinchNavigationButtonView *)bottomRightButton
+{
+    [self.bottomContainer.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    // add the entire view to the bottomContainer and pin the edges.
+    [self.bottomContainer addSubview:bottomRightButton];
+    [bottomRightButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.bottomContainer.mas_bottom).offset(20);
+        make.right.equalTo(self.bottomContainer.mas_right).offset(20);
+        make.height.equalTo(@(bottomRightButton.frame.size.height));
+        make.width.equalTo(@(bottomRightButton.frame.size.width));
+    }];
+    
+    _bottomRightButton = bottomRightButton;
+    _bottomRightButton.delegate = self;
 }
 
 # pragma mark - Gestures
@@ -329,9 +368,16 @@ static const CGFloat kMinIrisScale = 0.01f;
         make.edges.equalTo(self.view);
     }];
     
+    //init bottom view
+    [self.view bringSubviewToFront:self.bottomContainer];
+    self.bottomContainer.alpha = 0.0f;
+    [self.bottomContainer setHidden:NO];
+    
+    //init buttons
     [self.view bringSubviewToFront:self.buttonContainer];
     [self.view layoutIfNeeded];
     [self initButtons];
+    
     
     // Animate each button outwards.
     // This is done with a CAKeyframeAnimation subclass,
@@ -341,8 +387,10 @@ static const CGFloat kMinIrisScale = 0.01f;
         for ( int i = 0; i < self.buttonArray.count; i++ ) {
             PinchNavigationButtonView *button = [self.buttonArray objectAtIndex:i];
             [self moveViewOutwardsFromCenter:button forIndex:i withDistance:self.buttonDistanceFromCenter];
-            button.alpha = 1;
+            button.alpha = 1.0f;
         }
+        
+        self.bottomContainer.alpha = 1.0f;
         
     } completion:^(BOOL animationCompleted) {
         

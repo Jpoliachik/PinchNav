@@ -24,5 +24,6 @@
 @property (nonatomic, weak) id<PinchNavigationButtonDelegate> delegate;
 
 - (instancetype)initWithTitle:(NSString *)title color:(UIColor *)color diameter:(CGFloat)diameter;
+- (instancetype)initWithCustomView:(UIView *)customView;
 
 @end

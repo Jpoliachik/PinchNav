@@ -30,6 +30,9 @@
     PinchNavigationButtonView *button4 = [[PinchNavigationButtonView alloc] initWithTitle:@"About" color:[UIColor colorWithRed:0.91 green:0.41 blue:0.48 alpha:1] diameter:80];
     PinchNavigationButtonView *button5 = [[PinchNavigationButtonView alloc] initWithTitle:@"Settings" color:[UIColor colorWithRed:0.65 green:0.52 blue:0.73 alpha:1] diameter:80];
     
+    PinchNavigationButtonView *bottomRightButton = [[PinchNavigationButtonView alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)]];
+    bottomRightButton.tag = 6;
+    
     // assign the buttons tags so we can later tell which one is which
     button1.tag = 1;
     button2.tag = 2;
@@ -40,12 +43,15 @@
     NSArray *buttonArray = @[button1, button2, button3, button4, button5];
     self.pinchNav = [[PinchNavigationViewController alloc] initWithGestureRecognizingView:self.window withButtonArray:buttonArray];
     self.pinchNav.delegate = self;
+    self.pinchNav.bottomRightButton = bottomRightButton;
+    
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    [bottomView setBackgroundColor:[UIColor redColor]];
     
     // init the sample view controller
     OneViewController *vc = [[OneViewController alloc] init];
     self.window.rootViewController = vc;
     [self.window makeKeyAndVisible];
-    
     
     return YES;
 }
@@ -97,6 +103,9 @@
             break;
         case 5:
             newRoot = [[FiveViewController alloc] init];
+            break;
+        case 6:
+            newRoot = [[ThreeViewController alloc] init];
             break;
         default:
             newRoot = self.window.rootViewController;

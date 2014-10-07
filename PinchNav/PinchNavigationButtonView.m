@@ -9,6 +9,7 @@
 #import "PinchNavigationButtonView.h"
 
 @interface PinchNavigationButtonView()
+@property (nonatomic, assign) BOOL isCircle;
 @end
 
 @implementation PinchNavigationButtonView
@@ -30,6 +31,7 @@
 	if(!self){
 		return nil;
 	}
+    _isCircle = YES;
 	_shouldAnimateOnPress = YES;
     [self setBackgroundColor:[UIColor clearColor]];
     
@@ -51,6 +53,31 @@
     [self addSubview:button];
 	
 	return self;
+}
+
+- (instancetype)initWithCustomView:(UIView *)customView
+{
+    self = [self initWithFrame:CGRectMake(0, 0, customView.frame.size.width, customView.frame.size.height)];
+    
+    if(!self){
+        return nil;
+    }
+    _isCircle = NO;
+    _shouldAnimateOnPress = YES;
+    [self setBackgroundColor:[UIColor clearColor]];
+    
+    [self addSubview:customView];
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:self.frame];
+    [button addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchDown];
+    [button addTarget:self action:@selector(buttonRelease:) forControlEvents:UIControlEventTouchCancel];
+    [button addTarget:self action:@selector(buttonRelease:) forControlEvents:UIControlEventTouchDragExit];
+    [button addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(buttonRelease:) forControlEvents:UIControlEventTouchUpOutside];
+    [self addSubview:button];
+    
+    return self;
+
 }
 
 /**
@@ -75,12 +102,13 @@
  */
 - (void)drawRect:(CGRect)rect
 {
-    // Draw a circle
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextAddEllipseInRect(ctx, rect);
-    CGContextSetFillColor(ctx, CGColorGetComponents([self.fillColor CGColor]));
-    CGContextFillPath(ctx);
-
+    if (self.isCircle) {
+        // Draw a circle
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGContextAddEllipseInRect(ctx, rect);
+        CGContextSetFillColor(ctx, CGColorGetComponents([self.fillColor CGColor]));
+        CGContextFillPath(ctx);
+    }
 }
 
 /**
