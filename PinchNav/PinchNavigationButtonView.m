@@ -64,7 +64,7 @@
     }
     _isCircle = NO;
     _shouldAnimateOnPress = YES;
-    [self setBackgroundColor:[UIColor clearColor]];
+    [self setBackgroundColor:[UIColor redColor]];
     
     [self addSubview:customView];
     

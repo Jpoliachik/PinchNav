@@ -29,7 +29,6 @@ static const CGFloat kMinIrisScale = 0.01f;
 @interface PinchNavigationViewController ()
 @property (nonatomic, strong) UIView *irisView;
 @property (nonatomic, strong) UIView *buttonContainer;
-@property (nonatomic, strong) UIView *bottomContainer;
 @property (nonatomic, readwrite) PNavState state;
 @property (nonatomic, strong) NSArray *buttonArray;
 @end
@@ -82,6 +81,8 @@ static const CGFloat kMinIrisScale = 0.01f;
     self.irisColor = [UIColor blackColor];
     
     self.enabled = YES;
+    
+    self.cornerPadding = 15.0f;
 }
 
 - (void)initButtons
@@ -96,6 +97,25 @@ static const CGFloat kMinIrisScale = 0.01f;
         buttonView.center = center;
 		[self.buttonContainer addSubview:buttonView];
 	}
+}
+
+- (void)initEdgeButtons
+{
+    if (self.bottomRightButton) {
+        self.bottomRightButton.delegate = self;
+        self.bottomRightButton.alpha = 0.0;
+        self.bottomRightButton.hidden = NO;
+        [self.view addSubview:self.bottomRightButton];
+        
+        [self.bottomRightButton mas_makeConstraints:^(MASConstraintMaker *make) {
+
+            make.right.equalTo(self.view.mas_right).with.offset(self.cornerPadding);
+            make.bottom.equalTo(self.view.mas_bottom).with.offset(self.cornerPadding);
+            make.height.equalTo(@(self.bottomRightButton.bounds.size.height));
+            make.width.equalTo(@(self.bottomRightButton.bounds.size.width));
+            
+        }];
+    }
 }
 
 - (void)loadView
@@ -134,45 +154,6 @@ static const CGFloat kMinIrisScale = 0.01f;
     }
     
     return _buttonContainer;
-}
-
-- (UIView *)bottomContainer
-{
-    if (!_bottomContainer) {
-        
-        _bottomContainer = [[UIView alloc] init];
-        [self.view addSubview:_bottomContainer];
-        [_bottomContainer setHidden:YES];
-        
-        [_bottomContainer mas_makeConstraints:^(MASConstraintMaker *make) {
-            
-            make.left.equalTo(self.view.mas_left);
-            make.right.equalTo(self.view.mas_right);
-            make.bottom.equalTo(self.view.mas_bottom);
-            make.top.equalTo(self.buttonContainer.mas_bottom);
-            
-        }];
-
-    }
-    
-    return _bottomContainer;
-}
-
-- (void)setBottomRightButton:(PinchNavigationButtonView *)bottomRightButton
-{
-    [self.bottomContainer.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
-    // add the entire view to the bottomContainer and pin the edges.
-    [self.bottomContainer addSubview:bottomRightButton];
-    [bottomRightButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.bottomContainer.mas_bottom).offset(20);
-        make.right.equalTo(self.bottomContainer.mas_right).offset(20);
-        make.height.equalTo(@(bottomRightButton.frame.size.height));
-        make.width.equalTo(@(bottomRightButton.frame.size.width));
-    }];
-    
-    _bottomRightButton = bottomRightButton;
-    _bottomRightButton.delegate = self;
 }
 
 # pragma mark - Gestures
@@ -368,10 +349,8 @@ static const CGFloat kMinIrisScale = 0.01f;
         make.edges.equalTo(self.view);
     }];
     
-    //init bottom view
-    [self.view bringSubviewToFront:self.bottomContainer];
-    self.bottomContainer.alpha = 0.0f;
-    [self.bottomContainer setHidden:NO];
+    //init corner buttoms
+    [self initEdgeButtons];
     
     //init buttons
     [self.view bringSubviewToFront:self.buttonContainer];
@@ -390,7 +369,7 @@ static const CGFloat kMinIrisScale = 0.01f;
             button.alpha = 1.0f;
         }
         
-        self.bottomContainer.alpha = 1.0f;
+        self.bottomRightButton.alpha = 1.0f;
         
     } completion:^(BOOL animationCompleted) {
         

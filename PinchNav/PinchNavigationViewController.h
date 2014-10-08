@@ -48,6 +48,8 @@ typedef enum PNavState{
 @property (nonatomic, strong) UIColor *irisColor;
 @property (nonatomic, assign) CGFloat irisAlpha;
 
+@property (nonatomic, assign) CGFloat cornerPadding;
+
 @property (nonatomic, weak) id<PinchNavigationDelegate> delegate;
 
 @property (nonatomic, assign) BOOL enabled;
